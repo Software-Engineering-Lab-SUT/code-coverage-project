@@ -2,6 +2,7 @@ package com.unittest.codecoverage.service;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -91,6 +92,146 @@ public class PersonServiceTest {
 		person.setGender(null);
 
 		assertThatThrownBy(() -> service.insert(person))
+				.isInstanceOf(PersonException.class)
+				.hasFieldOrPropertyWithValue("errors", expectedErrors)
+				.hasMessage(expectedMessage);
+	}
+
+	@Test
+	public void testUpdate_shouldUpdatePersonWithSuccessWhenAllPersonsInfoIsFilled() {
+		Person person = new Person();
+		person.setName("Name");
+		person.setAge(21);
+		person.setGender(Gender.M);
+
+		doNothing().when(repository).update(any(Person.class));
+
+		service.update(person);
+	}
+
+	@Test
+	public void testUpdate_shouldThrowPersonExceptionWhenPersonIsNull() {
+
+		List<String> expectedErrors = Lists.newArrayList("Name is required", "Gender is required");
+		String expectedMessage = String.join(";", expectedErrors);
+		Person person = null;
+
+		assertThatThrownBy(() -> service.update(person))
+				.isInstanceOf(PersonException.class)
+				.hasFieldOrPropertyWithValue("errors", expectedErrors)
+				.hasMessage(expectedMessage);
+	}
+
+	@Test
+	public void testUpdate_shouldThrowPersonExceptionWhenPersonNameIsNull() {
+
+		List<String> expectedErrors = Lists.newArrayList("Name is required");
+		String expectedMessage = String.join(";", expectedErrors);
+		Person person = new Person();
+		person.setGender(Gender.M);
+
+		assertThatThrownBy(() -> service.update(person))
+				.isInstanceOf(PersonException.class)
+				.hasFieldOrPropertyWithValue("errors", expectedErrors)
+				.hasMessage(expectedMessage);
+	}
+
+	@Test
+	public void testUpdate_shouldThrowPersonExceptionWhenPersonNameIsBlank() {
+
+		List<String> expectedErrors = Lists.newArrayList("Name is required");
+		String expectedMessage = String.join(";", expectedErrors);
+		Person person = new Person();
+		person.setGender(Gender.M);
+		person.setName(" ");
+
+		assertThatThrownBy(() -> service.update(person))
+				.isInstanceOf(PersonException.class)
+				.hasFieldOrPropertyWithValue("errors", expectedErrors)
+				.hasMessage(expectedMessage);
+	}
+
+	@Test
+	public void testUpdate_shouldThrowPersonExceptionWhenPersonGenderIsNull() {
+
+		List<String> expectedErrors = Lists.newArrayList("Gender is required");
+		String expectedMessage = String.join(";", expectedErrors);
+		Person person = new Person();
+		person.setName("Name");
+		person.setGender(null);
+
+		assertThatThrownBy(() -> service.update(person))
+				.isInstanceOf(PersonException.class)
+				.hasFieldOrPropertyWithValue("errors", expectedErrors)
+				.hasMessage(expectedMessage);
+	}
+
+	@Test
+	public void testGet_shouldGetPersonWithSuccessWhenNameIsFilled() {
+		Person person = new Person();
+		person.setName("Name");
+		person.setAge(21);
+		person.setGender(Gender.M);
+
+		when(repository.get(any(String.class))).thenReturn(person);
+
+		service.get(person.getName());
+	}
+
+	@Test
+	public void testGet_shouldThrowPersonExceptionWhenNameIsNull() {
+
+		List<String> expectedErrors = Lists.newArrayList("Name is required");
+		String expectedMessage = String.join(";", expectedErrors);
+		String name = null;
+
+		assertThatThrownBy(() -> service.get(name))
+				.isInstanceOf(PersonException.class)
+				.hasFieldOrPropertyWithValue("errors", expectedErrors)
+				.hasMessage(expectedMessage);
+	}
+
+	@Test
+	public void testGet_shouldThrowPersonExceptionWhenNameIsBlank() {
+
+		List<String> expectedErrors = Lists.newArrayList("Name is required");
+		String expectedMessage = String.join(";", expectedErrors);
+		String name = " ";
+
+		assertThatThrownBy(() -> service.get(name))
+				.isInstanceOf(PersonException.class)
+				.hasFieldOrPropertyWithValue("errors", expectedErrors)
+				.hasMessage(expectedMessage);
+	}
+
+	@Test
+	public void testDelete_shouldDeletePersonWithSuccessWhenNameIsFilled() {
+		String name = "Name";
+		doNothing().when(repository).delete(any(String.class));
+		service.delete(name);
+	}
+
+	@Test
+	public void testDelete_shouldThrowPersonExceptionWhenNameIsNull() {
+
+		List<String> expectedErrors = Lists.newArrayList("Name is required");
+		String expectedMessage = String.join(";", expectedErrors);
+		String name = null;
+
+		assertThatThrownBy(() -> service.delete(name))
+				.isInstanceOf(PersonException.class)
+				.hasFieldOrPropertyWithValue("errors", expectedErrors)
+				.hasMessage(expectedMessage);
+	}
+
+	@Test
+	public void testDelete_shouldThrowPersonExceptionWhenNameIsBlank() {
+
+		List<String> expectedErrors = Lists.newArrayList("Name is required");
+		String expectedMessage = String.join(";", expectedErrors);
+		String name = " ";
+
+		assertThatThrownBy(() -> service.delete(name))
 				.isInstanceOf(PersonException.class)
 				.hasFieldOrPropertyWithValue("errors", expectedErrors)
 				.hasMessage(expectedMessage);
