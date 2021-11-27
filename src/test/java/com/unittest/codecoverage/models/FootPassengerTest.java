@@ -17,7 +17,7 @@ public class FootPassengerTest {
         footPassenger.setCrossedTheCrosswalk(false);
         assertFalse(footPassenger.crossedTheCrosswalk());
     }
-    
+
     @Test
     public void testSetterAndGetterCrossedTrafficLight() {
         FootPassenger footPassenger = new FootPassenger();

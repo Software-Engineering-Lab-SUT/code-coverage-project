@@ -23,6 +23,7 @@ public class PersonRepositoryTest {
 
         personRepository.insert(person);
     }
+
     @Test
     public void testInsert_shouldThrowPersonExceptionWhenPersonIsNull() {
 
@@ -36,6 +37,7 @@ public class PersonRepositoryTest {
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage(expectedMessage);
     }
+
     @Test
     public void testUpdate_shouldUpdatePersonWithSuccessWhenAllPersonsInfoIsFilled() {
         Person person = new Person();
@@ -47,6 +49,7 @@ public class PersonRepositoryTest {
 
         personRepository.update(person);
     }
+
     @Test
     public void testUpdate_shouldThrowPersonExceptionWhenPersonIsNull() {
 
@@ -60,12 +63,14 @@ public class PersonRepositoryTest {
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage(expectedMessage);
     }
+
     @Test
     public void testGet_shouldGetPersonWithSuccessWhenNameIsFilled() {
         String name = "Name";
         PersonRepository personRepository = new PersonRepository();
         personRepository.get(name);
     }
+
     @Test
     public void testGet_shouldThrowPersonExceptionWhenNameIsNull() {
 
@@ -79,12 +84,14 @@ public class PersonRepositoryTest {
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage(expectedMessage);
     }
+
     @Test
     public void testDelete_shouldDeletePersonWithSuccessWhenNameIsFilled() {
         String name = "Name";
         PersonRepository personRepository = new PersonRepository();
         personRepository.delete(name);
     }
+
     @Test
     public void testDelete_shouldThrowPersonExceptionWhenNameIsNull() {
 
