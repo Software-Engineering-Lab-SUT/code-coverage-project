@@ -9,5 +9,4 @@ class CodecoverageApplicationTests {
 //	@Test
 	void contextLoads() {
 	}
-
 }

@@ -15,7 +15,9 @@
 	<description>Demo project for unit test with code coverage</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
+		<maven.compiler.source>8</maven.compiler.source>
+		<maven.compiler.target>8</maven.compiler.target>
 	</properties>
 
 	<dependencies>

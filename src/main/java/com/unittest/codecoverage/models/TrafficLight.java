@@ -1,7 +1,5 @@
 package com.unittest.codecoverage.models;
 
-public enum TrafficLigth {
-	
+public enum TrafficLight {
 	RED, GREEN, YELLOW;
-	
 }
